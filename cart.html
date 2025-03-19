@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+  <body>
+    <section id="header">
+      <a href="#"><img src="img/logo.png" class="logo" alt="" /></a>
+
+      <div>
+        <ul id="navbar">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="shop.html">Shop</a></li>
+          <li><a href="blog.html">Need help to pick one?</a></li>
+
+          <li id="lg-bag">
+            <a class="active" href="cart.html"
+              ><i class="fa-solid fa-cart-shopping"></i
+            ></a>
+          </li>
+          <a href="#" id="close"><i class="fa-solid fa-xmark"></i></a>
+        </ul>
+      </div>
+
+      <div id="mobile">
+        <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
+        <i id="bar" class="fas fa-outdent"></i>
+      </div>
+    </section>
+    <div class="cart-container section-p1"></div>
+
+    <div class="cart-summary">
+      <label for="coupon">Apply Coupon:</label>
+      <input type="text" id="coupon" placeholder=" SAVE10" />
+      <button id="apply-coupon">Apply</button>
+
+      <p>Original Price: <span class="original-price"></span></p>
+      <p>Discount: <span class="discount-amount">0</span></p>
+      <p>Total Price: <span class="total-price">250</span></p>
+
+      <div class="checkout-container">
+        <span>Checkout</span>
+        <div class="checkout-slider">
+          <span class="checkout-arrow">→</span>
+        </div>
+      </div>
+    </div>
+    <footer class="section-p1">
+      <div class="col">
+        <img class="logo" src="img/logo.png" alt="" />
+        <h4>Contact</h4>
+        <p>
+          <strong>Address:</strong> 562 Wellington Road, Street 32, San
+          Francisco
+        </p>
+        <p><strong>Phone:</strong> +01 2222 365 /(+91) 01 2345 6789</p>
+        <p><strong>Hours:</strong> 10:00 - 18:00, Mon - Sat</p>
+        <div class="follow">
+          <h4>Follow us</h4>
+          <div class="icon">
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-pinterest-p"></i>
+            <i class="fab fa-youtube"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h4>About</h4>
+        <a href="#">About us</a>
+        <a href="#">Delivery Information</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms & Conditions</a>
+        <a href="#">Contact Us</a>
+      </div>
+      <div class="col">
+        <h4>My Account</h4>
+        <a href="#">Sign In</a>
+        <a href="#">View Cart</a>
+        <a href="#">My Wishlist</a>
+        <a href="#">Track My Order</a>
+        <a href="#">Help</a>
+      </div>
+
+      <div class="col install">
+        <h4>Install App</h4>
+        <p>From App Store or Google Play</p>
+        <div class="row">
+          <img src="img/pay/app.jpg" alt="" />
+          <img src="img/pay/play.jpg" alt="" />
+        </div>
+        <p>Secured Payment Gateways</p>
+        <img src="img/pay/pay.png" alt="" />
+      </div>
+      <div class="copyright">
+        <p>© 2021, Tech2 etc - HTML CSS Ecommerce Template</p>
+      </div>
+    </footer>
+    <script src="script.js"></script>
+    <script>
+      function handlePayment() {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        let totalPrice = cart.reduce(
+          (sum, product) => sum + product.quantity * product.price,
+          0
+        );
+
+        let originalPrice = document.querySelector(".original-price");
+        let discountAmount = document.querySelector(".discount-amount");
+        let total = document.querySelector(".total-price");
+
+        originalPrice.textContent = totalPrice.toFixed(2);
+        total.textContent = totalPrice.toFixed(2);
+      }
+      function displayCart() {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        let cartContainer = document.querySelector(".cart-container");
+
+        cartContainer.innerHTML = "";
+
+        if (cart.length === 0) {
+          cartContainer.innerHTML = "<p>Your cart is empty</p>";
+          return;
+        }
+
+        cart.forEach((product, index) => {
+          let productRow = document.createElement("div");
+          productRow.classList.add("cart-item");
+
+          productRow.innerHTML = `
+          <img src="${product.image}" class="product-image" alt="${product.name}">
+              <div class="cart-item-details">
+                <p class="product-name">${product.name}</p>
+                  <p class="cart-item-price">${product.price} EGP</p>
+                  </div>
+                  <div class="quantity-control">
+                    <button class="decrease" onclick="update(${index}, -1, this)">-</button>
+                    <span class="quantity">${product.quantity}</span>
+                    <button class="increase" onclick="update(${index}, 1, this)">+</button>
+                    </div>
+                    <button class="remove-item" onclick="update(${index}, 0, this)">Remove</button>
+                    `;
+
+          cartContainer.appendChild(productRow);
+        });
+      }
+
+      function update(index, change, button) {
+        let cart = JSON.parse(localStorage.getItem("cart"));
+
+        if (cart[index]) {
+          cart[index].quantity += change;
+
+          if (cart[index].quantity < 1 || change === 0) {
+            cart.splice(index, 1);
+          }
+        }
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+        displayCart();
+        updateCartIcon();
+      }
+
+      document.addEventListener("DOMContentLoaded", displayCart);
+      document.addEventListener("DOMContentLoaded", handlePayment);
+
+      handlePayment();
+    </script>
+  </body>
+</html>
