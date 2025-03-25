@@ -1,5 +1,8 @@
 Important Note:
 🚨 This website is NOT responsive. It is designed for desktop screens only and does not include media queries for mobile or tablet support.
+### 🔗 Live Demo  
+[Click here to view the website](https://rawan-amr111.github.io/E-commerce_website/)
+
 
 This is my first project uploaded to GitHub, and it demonstrates my skills in front-end development and JavaScript interactivity. Future improvements may include adding responsiveness, optimizing UI/UX, and integrating a backend for real transactions.
 
