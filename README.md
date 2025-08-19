@@ -9,7 +9,7 @@ This is my first project uploaded to GitHub, and it demonstrates my skills in fr
 
 
 E-Commerce Perfume Store Template
-This is a static e-commerce website for a luxury perfume store, built using HTML, CSS, and JavaScript. The project includes several essential pages and features for an online shopping experience.
+This is an e-commerce website for a luxury perfume store, built using HTML, CSS, and JavaScript. The project includes several essential pages and features for an online shopping experience.
 
 Features:
 Pages Included:
